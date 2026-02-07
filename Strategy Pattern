@@ -1,0 +1,85 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+const int INF = 1e18;
+
+// strategy Pattern
+
+
+class PaymentStrategy{
+public:
+    virtual void processPayment () = 0;
+    virtual ~PaymentStrategy() = default;
+};
+
+
+
+class CreditCardPayment : public PaymentStrategy {
+public:
+    void processPayment() override {
+        cout << "Processing credit card payment..." << endl;
+    }
+};
+
+class PayPalPayment : public PaymentStrategy {
+public:
+    void processPayment() override {
+        cout << "Processing PayPal payment..." << endl;
+    }
+};
+
+class CryptoPayment : public PaymentStrategy {
+public:
+    void processPayment() override {
+        cout << "Processing crypto payment..." << endl;
+    }
+};
+
+
+
+//create a class which provide context in runTime
+
+class PaymentProcessor{
+
+    unique_ptr<PaymentStrategy> strategy;
+
+public:
+    PaymentProcessor (unique_ptr<PaymentStrategy> s){
+        strategy = move(s);
+    }
+
+    void SetStrategy(unique_ptr<PaymentStrategy> s){
+        strategy = move(s);
+    }
+    void process(int amount){
+        cout << "Payment start...\n";
+        strategy->processPayment();
+        cout << "Payment Completed...\n";
+    }
+
+};
+
+
+void solve(){
+
+    PaymentProcessor pay(make_unique<CreditCardPayment>());
+    pay.process(500);
+
+    cout <<"\n";
+
+    pay.SetStrategy(make_unique<CryptoPayment>());
+    pay.process(900);
+
+};
+
+signed main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t;
+    // cin >> t;
+    t=1;
+    while (t--) {
+        solve();
+    }
+}
