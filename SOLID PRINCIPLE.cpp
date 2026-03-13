@@ -108,6 +108,62 @@ signed main() {
     }
 }
 
+// LISKOV SUBSTUTION PRINCIPLE
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Shape {
+public:
+    virtual int area() = 0;
+};
+
+class Rectangle : public Shape {
+private:
+    int width, height;
+
+public:
+    Rectangle(int w, int h) {
+        width = w;
+        height = h;
+    }
+
+    int area() override {
+        return width * height;
+    }
+};
+
+class Square : public Shape {
+private:
+    int side;
+
+public:
+    Square(int s) {
+        side = s;
+    }
+
+    int area() override {
+        return side * side;
+    }
+};
+
+void printArea(Shape* shape) {
+    cout << "Area: " << shape->area() << endl;
+}
+
+int main() {
+
+    Shape* rect = new Rectangle(5,10);
+    Shape* sq = new Square(5);
+
+    printArea(rect);
+    printArea(sq);
+
+    delete rect;
+    delete sq;
+}
+
 
 // INTERFACE SEGREATION PRINCIPLE
 
@@ -212,4 +268,5 @@ signed main() {
     while (t--) {
         solve();
     }
+
 }
